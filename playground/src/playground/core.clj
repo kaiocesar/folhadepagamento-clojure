@@ -2,7 +2,8 @@
 
 (defn valor-descontado [valor-bruto]
   "Valor com 10% de desconto"
-  (* valor-bruto (- 1 0.10)))
+  (let [desconto (/ 10 100)]
+    (* valor-bruto (- 1 0.10))))
 
 
 (defn -main
