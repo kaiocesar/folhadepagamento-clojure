@@ -5,7 +5,6 @@
   "aplicar o desconto proporcinal"
   (* valor (/ valor-desconto-porc 100)))
 
-
 (defn calcular-inss [salario_base]
    "calculo inss"
     (cond 
@@ -17,6 +16,10 @@
 (defn calcular-fgts [salario_base]
   (* salario_base (/ 8 100)))
 
+
+(defn calcular-dependentes [dependentes]
+  (* dependentes 189.59))
+
 (defn -main
   "Estoque de produtos"
   ; calculo baseando em https://www.jornalcontabil.com.br/folha-de-pagamento-entenda-como-fazer-o-calculo/
@@ -27,7 +30,7 @@
     :jornada {:inicio 8 :refeicao 60 :termino 17 }
     :insalubridade "média"
     :periculosidade 0.30
-    :dependentes 1
+    :dependentes 10
     }
     :2 {
 
@@ -40,7 +43,7 @@
     ; (println (calcular-fgts (-> funcionarios :1 :salario_base)))
 
     ; calcular dependentes
-  
+    (println (calcular-dependentes (-> funcionarios :1 :dependentes)))
     ; calcular o IRPF
 
     ; calcular as horas extras
