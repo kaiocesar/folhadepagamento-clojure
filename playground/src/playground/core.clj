@@ -14,6 +14,8 @@
       (and (>= salario_base 2919.73) (<= salario_base 5839.45)) (aplicar-desconto 11 salario_base)
       :else 642.34))
 
+(defn calcular-fgts [salario_base]
+  (* salario_base (/ 8 100)))
 
 (defn -main
   "Estoque de produtos"
@@ -25,23 +27,31 @@
     :jornada {:inicio 8 :refeicao 60 :termino 17 }
     :insalubridade "média"
     :periculosidade 0.30
+    :dependentes 1
     }
     :2 {
 
     }})
-
-    ; calcular salario liquido
+    
     ; calcular inss
+    ;(println (calcular-inss (-> funcionarios :1 :salario_base)))
+
     ; calcular o fgts
+    ; (println (calcular-fgts (-> funcionarios :1 :salario_base)))
+
+    ; calcular dependentes
+  
     ; calcular o IRPF
+
     ; calcular as horas extras
     ; calcular DSR (descanso semanal remunerado sobre horas extras)
     ; calcular vale transporte
     ; calcular o vale alimentação
     ; adicional noturno
     ; adicional de insalubridade
-  
-    (println (calcular-inss (-> funcionarios :1 :salario_base)))
+
+    ; calcular salario liquido
+    
   
   (println "Folha de pagamento"))
 
