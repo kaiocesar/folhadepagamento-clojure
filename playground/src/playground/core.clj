@@ -39,6 +39,14 @@
       (and (>= base_irrf 3751.06) (<= base_irrf 4664.68)) (aplicar-irrf salario_base valor_dependentes valor_inss 22.5 636.13)
       :else (aplicar-irrf salario_base valor_dependentes valor_inss 27.5 869.36))))
 
+(defn calcular-horas-extras [salario_hora horas_extras]
+  ; (let [total_horas_extras]
+  ;   (cond 
+  ;     (not (:domingos_feriados horas_extras)  nill) (* (-> horas_extras :domingos_feriados) ) )
+  ;   )
+  (println (:domingos_feriados horas_extras))
+  )
+
 (defn -main
   "Estoque de produtos"
   ; calculo baseando em https://www.jornalcontabil.com.br/folha-de-pagamento-entenda-como-fazer-o-calculo/
@@ -50,6 +58,10 @@
     :insalubridade "média"
     :periculosidade 0.30
     :dependentes 2
+    :horas_extras {
+        :domingos_feriados 1
+        :dias_uteis 2
+      }
     }
     :2 {
 
@@ -65,12 +77,14 @@
     ; (println (calcular-dependentes (-> funcionarios :1 :dependentes)))
 
     ; calcular o IRPF
-    (println (calcular-irrf 
-      (-> funcionarios :1 :salario_base) 
-        (calcular-dependentes (-> funcionarios :1 :dependentes)) 
-          (calcular-inss (-> funcionarios :1 :salario_base))))
+    ; (println (calcular-irrf 
+    ;   (-> funcionarios :1 :salario_base) 
+    ;     (calcular-dependentes (-> funcionarios :1 :dependentes)) 
+    ;       (calcular-inss (-> funcionarios :1 :salario_base))))
 
     ; calcular as horas extras
+    (calcular-horas-extras  (/ (-> funcionarios :1 :salario_base) (-> funcionarios :1 :base_horas))  (-> funcionarios :1 :horas_extras))
+
     ; calcular DSR (descanso semanal remunerado sobre horas extras)
     ; calcular vale transporte
     ; calcular o vale alimentação
