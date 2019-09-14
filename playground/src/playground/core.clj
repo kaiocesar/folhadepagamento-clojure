@@ -44,6 +44,12 @@
   ;   (cond 
   ;     (not (:domingos_feriados horas_extras)  nill) (* (-> horas_extras :domingos_feriados) ) )
   ;   )
+
+  (let [total_horas_extras ((if (:domingos_feriados horas_extras) (* (:domingos_feriados horas_extras) salario_hora) )]
+    
+    )
+
+
   (println (:domingos_feriados horas_extras))
   )
 
@@ -83,7 +89,8 @@
     ;       (calcular-inss (-> funcionarios :1 :salario_base))))
 
     ; calcular as horas extras
-    (calcular-horas-extras  (/ (-> funcionarios :1 :salario_base) (-> funcionarios :1 :base_horas))  (-> funcionarios :1 :horas_extras))
+    (calcular-horas-extras  (/ (-> funcionarios :1 :salario_base) (-> funcionarios :1 :base_horas))
+                            (-> funcionarios :1 :horas_extras))
 
     ; calcular DSR (descanso semanal remunerado sobre horas extras)
     ; calcular vale transporte
