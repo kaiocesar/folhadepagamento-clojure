@@ -39,19 +39,17 @@
       (and (>= base_irrf 3751.06) (<= base_irrf 4664.68)) (aplicar-irrf salario_base valor_dependentes valor_inss 22.5 636.13)
       :else (aplicar-irrf salario_base valor_dependentes valor_inss 27.5 869.36))))
 
-(defn calcular-horas-extras [salario_hora horas_extras]
-  ; (let [total_horas_extras]
-  ;   (cond 
-  ;     (not (:domingos_feriados horas_extras)  nill) (* (-> horas_extras :domingos_feriados) ) )
-  ;   )
-
-  (let [total_horas_extras ((if (:domingos_feriados horas_extras) (* (:domingos_feriados horas_extras) salario_hora) )]
-    
-    )
-
-
-  (println (:domingos_feriados horas_extras))
+(defn calcular-horas-extras [salario_hora dias_uteis domingos_feriados]
+  (println domingos_feriados dias_uteis)
   )
+
+(defn calcular-vale-transporte [salario_base vale_transporte_necessario]
+  (let [vale_transporte_base (* salario_base (/ 6 100))]
+    (cond
+      (> vale_transporte_base vale_transporte_necessario) (- vale_transporte_base vale_transporte_necessario)
+      (<= vale_transporte_base vale_transporte_necessario) vale_transporte_base ; a diferença será adicionada para a empresa
+    )))
+
 
 (defn -main
   "Estoque de produtos"
@@ -67,6 +65,9 @@
     :horas_extras {
         :domingos_feriados 1
         :dias_uteis 2
+      }
+    :outras_dependencias {
+        :vale_transporte_necessario 228.80 ; 44 passagens de 5,20
       }
     }
     :2 {
@@ -89,11 +90,15 @@
     ;       (calcular-inss (-> funcionarios :1 :salario_base))))
 
     ; calcular as horas extras
-    (calcular-horas-extras  (/ (-> funcionarios :1 :salario_base) (-> funcionarios :1 :base_horas))
-                            (-> funcionarios :1 :horas_extras))
+    ; (calcular-horas-extras  (/ (-> funcionarios :1 :salario_base) (-> funcionarios :1 :base_horas))
+    ;                         (-> funcionarios :1 :horas_extras :dias_uteis) (-> funcionarios :1 :horas_extras :domingos_feriados))
 
     ; calcular DSR (descanso semanal remunerado sobre horas extras)
     ; calcular vale transporte
+    (-> (calcular-vale-transporte 
+      (-> funcionarios :1 :salario_base) 
+        (-> funcionarios :1 :outras_dependencias :vale_transporte_necessario)) println)
+
     ; calcular o vale alimentação
     ; adicional noturno
     ; adicional de insalubridade
