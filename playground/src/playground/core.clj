@@ -1,6 +1,8 @@
 (ns playground.core)
 
 
+(def porcentagem-vale-refeicao 0.2)
+
 (defn aplicar-desconto [valor_desconto_porc valor]
   "aplicar o desconto proporcinal"
   (* valor (/ valor_desconto_porc 100)))
@@ -15,6 +17,9 @@
         valor_aplicado
       ))
   ))
+
+(defn calcular-salario-hora [salario_base base_horas]
+  (/ salario_base base_horas))
 
 (defn calcular-inss [salario_base]
    "calculo inss"
@@ -51,14 +56,23 @@
     )))
 
 
+  (defn calcular-vale-alimentacao [salario_base]
+    (* salario_base porcentagem-vale-refeicao))
+
+(defn calcular-adicional-noturno [salario_base jornada valor_hora]
+  (cond
+    (and (> (:inicio jornada) 21) (< (:termino jornada) 6)) (+ valor_hora (* valor_hora 0.20))
+  ))
+
+
 (defn -main
   "Estoque de produtos"
   ; calculo baseando em https://www.jornalcontabil.com.br/folha-de-pagamento-entenda-como-fazer-o-calculo/
   []
   (def funcionarios {:1 {
-    :salario_base 3000
+    :salario_base 3000.00
     :base_horas 220
-    :jornada {:inicio 8 :refeicao 60 :termino 17 }
+    :jornada {:inicio 22 :refeicao 60 :termino 5 }
     :insalubridade "média"
     :periculosidade 0.30
     :dependentes 2
@@ -95,12 +109,21 @@
 
     ; calcular DSR (descanso semanal remunerado sobre horas extras)
     ; calcular vale transporte
-    (-> (calcular-vale-transporte 
-      (-> funcionarios :1 :salario_base) 
-        (-> funcionarios :1 :outras_dependencias :vale_transporte_necessario)) println)
+    ; (-> (calcular-vale-transporte 
+    ;   (-> funcionarios :1 :salario_base) 
+    ;     (-> funcionarios :1 :outras_dependencias :vale_transporte_necessario)) println)
 
     ; calcular o vale alimentação
+    ; (-> (calcular-vale-alimentacao (-> funcionarios :1 :salario_base)) println)
+
     ; adicional noturno
+    (let [salario_base (-> funcionarios :1 :salario_base)]
+      (-> (calcular-adicional-noturno 
+            (-> funcionarios :1 :salario_base) 
+            (-> funcionarios :1 :jornada) 
+            (calcular-salario-hora salario_base (-> funcionario :1 :base_horas)))))
+    
+
     ; adicional de insalubridade
 
     ; calcular salario liquido
