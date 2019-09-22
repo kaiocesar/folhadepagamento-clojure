@@ -85,7 +85,19 @@
       }
     }
     :2 {
-
+      :salario_base 1500.00
+     :base_horas 220
+     :jornada {:inicio 08 :refeicao 60 :termino 17 }
+     :insalubridade "baixa"
+     :periculosidade 0.10
+     :dependentes 1
+     :horas_extras {
+        :domingos_feriados 0
+        :dias_uteis 25
+      }
+    :outras_dependencias {
+        :vale_transporte_necessario 196,68 ;; 44 passagens de 5,20
+      }
     }})
     
     ; calcular inss
