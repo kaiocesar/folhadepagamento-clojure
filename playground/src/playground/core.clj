@@ -67,38 +67,41 @@
 
 (defn -main
   "Estoque de produtos"
-  ; calculo baseando em https://www.jornalcontabil.com.br/folha-de-pagamento-entenda-como-fazer-o-calculo/
+  ;; calculo baseando em https://www.jornalcontabil.com.br/folha-de-pagamento-entenda-como-fazer-o-calculo/
   []
-  (def funcionarios {:1 {
-    :salario_base 3000.00
-    :base_horas 220
-    :jornada {:inicio 22 :refeicao 60 :termino 5 }
-    :insalubridade "média"
-    :periculosidade 0.30
-    :dependentes 2
-    :horas_extras {
+  (def funcionarios  [
+    {
+      :name "Ana Julia"
+      :salario_base 3000.00
+      :base_horas 220
+      :jornada {:inicio 22 :refeicao 60 :termino 5 }
+      :insalubridade "média"
+      :periculosidade 0.30
+      :dependentes 2
+      :horas_extras {
         :domingos_feriados 1
         :dias_uteis 2
       }
-    :outras_dependencias {
-        :vale_transporte_necessario 228.80 ; 44 passagens de 5,20
+      :outras_dependencias {
+        :vale_transporte_necessario 228.80 ;; 44 passagens de R$5,20
       }
     }
-    :2 {
+    {
+      :name "Manuella"
       :salario_base 1500.00
-     :base_horas 220
-     :jornada {:inicio 08 :refeicao 60 :termino 17 }
-     :insalubridade "baixa"
-     :periculosidade 0.10
-     :dependentes 1
-     :horas_extras {
+      :base_horas 220
+      :jornada {:inicio 8 :refeicao 60 :termino 17 }
+      :insalubridade "baixa"
+      :periculosidade 0.10
+      :dependentes 1
+      :horas_extras {
         :domingos_feriados 0
         :dias_uteis 25
       }
     :outras_dependencias {
-        :vale_transporte_necessario 196,68 ;; 44 passagens de 5,20
+        :vale_transporte_necessario 196.68 ;; 44 passagens de R$4,75
       }
-    }})
+    }])
     
     ; calcular inss
     ;(println (calcular-inss (-> funcionarios :1 :salario_base)))
@@ -129,12 +132,16 @@
     ; (-> (calcular-vale-alimentacao (-> funcionarios :1 :salario_base)) println)
 
     ; adicional noturno
-    (let [salario_base (-> funcionarios :1 :salario_base)]
-      (-> (calcular-adicional-noturno 
-            (-> funcionarios :1 :salario_base) 
-            (-> funcionarios :1 :jornada) 
-            (calcular-salario-hora salario_base (-> funcionario :1 :base_horas)))))
+    ; (let [salario_base (-> funcionarios :1 :salario_base)]
+    ;   (-> (calcular-adicional-noturno 
+    ;         (-> funcionarios :1 :salario_base) 
+    ;         (-> funcionarios :1 :jornada) 
+    ;         (calcular-salario-hora salario_base (-> funcionario :1 :base_horas)))))
     
+
+    ;; Exibir funcionários
+    ; (-> (map #(str "\n Funcionário " (:name %) " com salário R$ " (:salario_base %)) funcionarios) println )
+
 
     ; adicional de insalubridade
 
