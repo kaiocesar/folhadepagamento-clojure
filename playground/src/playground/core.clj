@@ -3,6 +3,8 @@
 
 (def porcentagem-vale-refeicao 0.2)
 
+(def salario-minimo-nacional 998)
+
 (defn aplicar-desconto [valor_desconto_porc valor]
   "aplicar o desconto proporcinal"
   (* valor (/ valor_desconto_porc 100)))
@@ -61,9 +63,16 @@
 
 (defn calcular-adicional-noturno [salario_base jornada valor_hora]
   (cond
-    (and (> (:inicio jornada) 21) (< (:termino jornada) 6)) (+ valor_hora (* valor_hora 0.20))
+    (and (> (:inicio jornada) 21) (< (:termino jornada) 6)) (* valor_hora 1.20)
   ))
 
+(def calcular-insalubridade [insalubridade]
+   (cond
+     (= insalubridade "mínima") (* salario_minimo_nacional 0.10)
+     (= insalubridade "média") (* salario_minimo_nacional 0.20)
+     (= insalubridade "máxima") (* salario_minimo_nacional 0.40)
+))
+     
 
 (defn -main
   "Estoque de produtos"
@@ -144,7 +153,7 @@
 
 
     ; adicional de insalubridade
-
+    (-> calcular-insalubridade (-> funcionários :1 :insalubridade) println)
     ; calcular salario liquido
     
   
