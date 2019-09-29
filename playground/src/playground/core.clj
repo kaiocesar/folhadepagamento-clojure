@@ -66,11 +66,11 @@
     (and (> (:inicio jornada) 21) (< (:termino jornada) 6)) (* valor_hora 1.20)
   ))
 
-(def calcular-insalubridade [insalubridade]
+(defn calcular-insalubridade [insalubridade]
    (cond
-     (= insalubridade "mínima") (* salario_minimo_nacional 0.10)
-     (= insalubridade "média") (* salario_minimo_nacional 0.20)
-     (= insalubridade "máxima") (* salario_minimo_nacional 0.40)
+     (== insalubridade "mínima") (* salario-minimo-nacional 0.10)
+     (== insalubridade "média") (* salario-minimo-nacional 0.20)
+     (== insalubridade "máxima") (* salario-minimo-nacional 0.40)
 ))
      
 
@@ -153,7 +153,9 @@
 
 
     ; adicional de insalubridade
-    (-> calcular-insalubridade (-> funcionários :1 :insalubridade) println)
+    ; (-> calcular-insalubridade (-> funcionarios :1 :insalubridade) println)
+
+    (println  (-> funcionarios))
     ; calcular salario liquido
     
   
