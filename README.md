@@ -3,6 +3,6 @@
 
 ## Utilizar o projeto
 
-exceute:
+execute:
 `lein run`
 
