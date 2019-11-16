@@ -1,3 +1,3 @@
-# Introduction to playground
+# Introduction to folhadepagamento
 
 TODO: write [great documentation](http://jacobian.org/writing/what-to-write/)

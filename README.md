@@ -6,3 +6,5 @@
 execute:
 `lein run`
 
+teste
+`lein test`

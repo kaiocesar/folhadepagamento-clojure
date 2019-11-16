@@ -1,6 +1,6 @@
-(ns playground.core-test
+(ns folhadepagamento.core-test
   (:require [clojure.test :refer :all]
-            [playground.core :refer :all]))
+            [folhadepagamento.core :refer :all]))
 
 
 (deftest test-numbers
